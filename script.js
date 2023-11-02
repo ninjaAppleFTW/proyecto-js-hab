@@ -76,3 +76,38 @@ const reveal = (e) => {
     if (emoji1 === emoji2) {
       cartasEmparejadas++;
       flippedCards = [];
+      if (cartasEmparejadas === cards.length / 2) {
+        // Incrementa el contador de partidas
+        partidasGanadas++;
+        // Incrementa el número de intentos
+        totalIntentos++;
+        contadorIntentos.textContent = `Intentos: ${totalIntentos}`;
+      }
+    } else {
+      // Si no son iguales, esperar un segundo antes de girar las tarjetas
+      setTimeout(() => {
+        card1.classList.remove("flipped");
+        card2.classList.remove("flipped");
+        flippedCards = [];
+      }, 1000);
+    }
+  }
+};
+
+for (const card of cards) {
+  card.addEventListener("click", reveal);
+}
+
+function resetGame() {
+  totalMovimientos = 0;
+  cartasEmparejadas = 0;
+  assignRandomEmojis();
+
+  cards.forEach((card) => {
+    card.classList.remove("flipped");
+  });
+  contadorMovimientos.textContent = `Movimientos: ${totalMovimientos}`;
+}
+
+// botón de reinicio
+resetButton.addEventListener("click", resetGame);
